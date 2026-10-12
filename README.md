@@ -1,8 +1,8 @@
-# WordBitX — Software & Digital Solutions Website
+# WordbitX — Software & Digital Solutions Website
 
-Production Next.js 16 (App Router) website for **WordBitX**, built with TypeScript, Tailwind CSS v4, Drizzle ORM and PostgreSQL.
+Production Next.js 16 (App Router) website for **WordbitX**, built with TypeScript, Tailwind CSS v4, Drizzle ORM and PostgreSQL.
 
-> **No binary assets required.** Every brand illustration is an inline SVG React component, the social share card is generated from code, and photography is loaded from remote URLs through `next/image`. There is intentionally **no `public/` folder** — the whole project is plain source files, so nothing can be lost when the repository is downloaded, zipped or committed.
+> **Brand assets live in `public/brand/`.** Service, industry and team photography is served from `public/brand/`; every brand illustration is an inline SVG React component and the social share card is generated from code.
 
 ---
 
@@ -80,10 +80,8 @@ and to the database when one is attached — so a lead is never lost.
 
 ## Founder photo
 
-The About page shows a branded **AM** monogram for the founder (no local image file).
-To use a real photo, set `founder.photo` in `src/lib/team.ts` to a **remote https URL**
-(for example an image hosted on your domain or CDN). Do **not** put files in `public/` —
-that folder is intentionally omitted so downloads never lose images.
+The founder photo is served from `public/brand/team/awais-malick.jpg`. To replace it,
+commit a new image at the same path (or update `founder.photo` in `src/lib/team.ts`).
 
 ## Environment variables
 
@@ -103,14 +101,14 @@ that folder is intentionally omitted so downloads never lose images.
 
 | Route | Description |
 | --- | --- |
-| `/` | Homepage: hero, pillars, 14 services, showcase, why-us, technologies, process, industries, portfolio, insights, FAQ, CTA |
+| `/` | Homepage: hero, pillars, 60 services, showcase, why-us, technologies, process, industries, portfolio, insights, FAQ, CTA |
 | `/about` | Company, mission, vision, values, approach, technology philosophy |
 | `/services` | All services, grouped navigation, engagement models, FAQ |
-| `/services/[slug]` | 18 dedicated service pages with unique content and schema |
+| `/services/[slug]` | 60 dedicated service pages with unique content and schema |
 | `/portfolio` | Filterable project grid |
-| `/portfolio/[slug]` | 14 project profiles (overview, challenge, solution, features, tech, outcomes) |
+| `/portfolio/[slug]` | 25 project profiles (overview, challenge, solution, features, tech, outcomes) |
 | `/blog` | Featured post, working search and category filters |
-| `/blog/[slug]` | 8 long-form articles with TOC, related services, prev/next |
+| `/blog/[slug]` | 36 articles with TOC, related services, prev/next |
 | `/contact` | Validated enquiry form saved to PostgreSQL, WhatsApp CTA |
 | `/privacy-policy`, `/terms-conditions`, `/cookie-policy` | Legal pages |
 | `/sitemap.xml`, `/robots.txt`, `/opengraph-image` | Generated automatically |

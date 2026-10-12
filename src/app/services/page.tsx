@@ -59,7 +59,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Our Services"
         title="Software & Digital Services Built Around Business Outcomes"
-        description="Sixty focused service pages across websites, apps, custom software, marketplaces, SEO, paid ads and IT. Each page explains the process, deliverables, technologies and who it is for."
+        description={`${services.length} focused service pages across websites, apps, custom software, marketplaces, SEO, paid ads and IT. Each page explains the process, deliverables, technologies and who it is for.`}
         crumbs={[{ label: "Services", href: "/services" }]}
       >
         <div className="flex flex-wrap gap-3">
@@ -128,7 +128,7 @@ export default function ServicesPage() {
           <div className="overflow-hidden rounded-3xl border border-slate-200">
             <Image
               src={"/brand/team/about-studio-floor.jpg"}
-              alt="WordBitX engineering team collaborating on a client project"
+              alt="WordbitX engineering team collaborating on a client project"
               width={1200}
               height={800}
               sizes="(max-width: 1024px) 100vw, 48vw"
@@ -168,7 +168,7 @@ export default function ServicesPage() {
 
       <Section tone="muted">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-          <SectionHeading eyebrow="FAQ" title="Common questions about working with WordBitX" />
+          <SectionHeading eyebrow="FAQ" title="Common questions about working with WordbitX" />
           <FaqAccordion faqs={servicesFaqs} />
         </div>
       </Section>

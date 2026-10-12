@@ -151,7 +151,7 @@ export default function AboutPage() {
           tone="dark"
           eyebrow="Mission & Vision"
           title="What we are working towards"
-          description="Two statements plus a promise we will not dress up with invented numbers."
+          description="Two statements plus the promise behind every engagement."
           align="center"
         />
         <div className="mt-12 grid gap-8 lg:grid-cols-3">
@@ -193,7 +193,7 @@ export default function AboutPage() {
         <SectionHeading
           eyebrow="How we work with you"
           title="What you can hold us to"
-          description="Practical commitments on every engagement — not slogans, and not quotes we invented."
+          description="Practical commitments on every engagement — not slogans."
           align="center"
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
