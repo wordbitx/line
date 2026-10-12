@@ -101,7 +101,7 @@ commit a new image at the same path (or update `founder.photo` in `src/lib/team.
 
 | Route | Description |
 | --- | --- |
-| `/` | Homepage: hero, pillars, 60 services, showcase, why-us, technologies, process, industries, portfolio, insights, FAQ, CTA |
+| `/` | Homepage: hero + stats, industry strip, certifications, why-us, 8 featured services + service index, showcase, industries, reviews, CTA, markets + cities, process (4-step), FAQ |
 | `/about` | Company, mission, vision, values, approach, technology philosophy |
 | `/services` | All services, grouped navigation, engagement models, FAQ |
 | `/services/[slug]` | 60 dedicated service pages with unique content and schema |

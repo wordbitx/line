@@ -2,43 +2,32 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Section, SectionHeading, ButtonLink, Eyebrow } from "@/components/ui";
-import { ServiceCard, PostCard, ProjectCard } from "@/components/cards";
+import { ServiceCard } from "@/components/cards";
 import { DemosSection } from "@/components/demos-section";
 import { CertificationsBand } from "@/components/certifications-band";
 import { IndustryStrip } from "@/components/industry-strip";
 import { ReviewSlider } from "@/components/review-slider";
 import { ServiceIndex, ServiceNavFootnote } from "@/components/service-nav";
-import { MarketSphere } from "@/components/market-sphere";
-import { FlagIcon } from "@/components/flag-icon";
 import { AiServicesDeck } from "@/components/ai-services-deck";
 import { HeroReel } from "@/components/hero-reel";
 import { CtaBand } from "@/components/cta-band";
 import { FaqAccordion } from "@/components/accordion";
-import { TechChip, TechGlyph, TechIconSprite } from "@/components/tech-icon";
 import { FaqSchema } from "@/components/jsonld";
 import {
   ArrowRight,
-  CheckIcon,
   IndustryIcon,
   WhatsAppIcon,
   SearchIcon,
-  ShieldIcon,
   LayersIcon,
-  ClockIcon,
-  SparkIcon,
   MailIcon,
 } from "@/components/icons";
-import { MegaServiceIcon } from "@/components/mega-service-icon";
 import { getServices, services } from "@/lib/services";
-import { solutions } from "@/lib/solutions";
 import { industries } from "@/lib/industries";
 import { industryTileMedia } from "@/lib/industry-tile-media";
 import { markets } from "@/lib/markets";
 import { cities } from "@/lib/cities";
-import { getProject } from "@/lib/portfolio";
-import { sortedPosts } from "@/lib/blog";
-import { techCategories, marqueeTech } from "@/lib/technologies";
 import { media } from "@/lib/media";
+import { marqueeTech } from "@/lib/technologies";
 import { getHeroSlides } from "@/lib/hero-reel";
 import { siteConfig, whatsappLink } from "@/lib/site";
 import { processSteps } from "@/lib/process";
@@ -117,10 +106,9 @@ const homeFaqs: Faq[] = [
 ];
 
 /**
- * Replaces the old `pillars` (4 cards, shown high on the page) and `whyPoints`
- * (6 cards, shown lower). Both lists claimed "custom", "scalable" and
- * "support", so the page argued the same three points twice. Merged to six,
- * and every card keeps a link so this block still carries internal links.
+ * Three differentiators, each with a link so this block still carries
+ * internal links. The previous six argued overlapping points; the three
+ * below are the ones a first-time visitor actually weighs.
  */
 const whyCards = [
   {
@@ -130,28 +118,10 @@ const whyCards = [
     Icon: LayersIcon,
   },
   {
-    title: "Scalable, maintainable code",
-    text: "TypeScript, tested APIs, documented components and CI pipelines — with data models, caching and infrastructure planned for the traffic you expect in two years, not two weeks.",
-    href: "/services/devops-cloud-solutions",
-    Icon: ShieldIcon,
-  },
-  {
     title: "SEO & digital marketing",
     text: "Technical SEO, content, ads and conversion work so the websites and stores we ship can actually rank and sell — run by the same team that built them.",
     href: "/services/seo-services",
     Icon: SearchIcon,
-  },
-  {
-    title: "Long-term support",
-    text: "Post-launch monitoring, maintenance and a prioritised backlog so improvement never stalls once the first release is live.",
-    href: "/contact",
-    Icon: ClockIcon,
-  },
-  {
-    title: "Business-focused delivery",
-    text: "Requirements are tied to a commercial outcome — lead volume, order value, hours saved or cost removed — rather than to a feature list.",
-    href: "/about",
-    Icon: SparkIcon,
   },
   {
     title: "Clear communication",
@@ -172,29 +142,14 @@ const homeServiceSlugs = [
   "ai-solutions",
 ];
 
-const homeProjectSlugs = [
-  "fashion-shopify-storefront",
-  "jewellery-ecommerce-store",
-  "multi-branch-retail-pos-platform",
-  "clinic-appointment-booking-portal",
-  "warehouse-inventory-management-system",
-  "ai-document-processing-assistant",
-];
 
 export default function HomePage() {
   const homeServices = getServices(homeServiceSlugs);
-  const featuredProjects = homeProjectSlugs
-    .map((slug) => getProject(slug))
-    .filter((project): project is NonNullable<typeof project> => Boolean(project));
-  const latestPosts = sortedPosts.slice(0, 3);
   const heroSlides = getHeroSlides();
 
-  const spriteIcons = [...marqueeTech, ...techCategories.flatMap((category) => category.items)];
 
   return (
     <>
-      {/* One copy of every brand icon path used on this page (see TechIconSprite). */}
-      <TechIconSprite items={spriteIcons} />
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-navy-950 pt-24 text-white sm:pt-32 lg:pt-36">
@@ -359,11 +314,12 @@ export default function HomePage() {
             title="The team that will actually build your product"
             description="Not a sales desk that hands your project to someone else. The engineers who scope your product are the ones who build it and stay on it — an embedded product team that questions requirements, proposes the simplest thing that works, and leaves you a system you can run and extend without us."
           />
-          <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="mt-10">
             {/* Studio collage (owner's company visuals, 11 Oct): four branded
                 office shots — the pink-dupatta workspace shot removed and the
-                reception moved first, at the owner's direction. Left column =
-                the collage, right = the seven-stage process panel. */}
+                reception moved first, at the owner's direction. The seven-stage
+                process panel that used to share this row now lives only in the
+                compact #process strip below and on /process. */}
             <div className="grid grid-cols-2 gap-3.5">
               <div className="image-sheen relative row-span-2 overflow-hidden rounded-2xl border border-white/10 bg-navy-800 shadow-[0_24px_50px_-28px_rgba(0,0,0,0.75)]">
                 <Image
@@ -401,31 +357,6 @@ export default function HomePage() {
                   className="object-cover transition-transform duration-700 hover:scale-105"
                 />
               </div>
-            </div>
-
-            <div className="flex flex-col rounded-2xl border border-white/10 bg-navy-900/80 p-6 sm:p-8">
-              <p className="text-sm font-semibold text-brand-300">How we work</p>
-              <h3 className="mt-2 text-xl font-semibold text-white">Seven stages from discovery to support</h3>
-              <ol className="mt-6 flex flex-1 flex-col justify-between gap-5">
-                {processSteps.map((step) => (
-                  <li key={step.step} className="flex gap-4">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-500/15 text-xs font-bold text-brand-300 ring-1 ring-brand-400/25">
-                      {step.step}
-                    </span>
-                    <span className="block">
-                      <span className="block text-sm font-semibold text-white">{step.title}</span>
-                      <span className="mt-0.5 block text-sm leading-relaxed text-slate-400">{step.text}</span>
-                    </span>
-                  </li>
-                ))}
-              </ol>
-              <Link
-                href="/process"
-                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-300 transition-colors hover:text-brand-200"
-              >
-                See the full process
-                <ArrowRight className="h-4 w-4" />
-              </Link>
             </div>
           </div>
 
@@ -626,76 +557,6 @@ export default function HomePage() {
           </Link>
         </div>
         </div>
-
-        <div className="mt-16 border-t border-slate-200 pt-16 sm:mt-20 sm:pt-20">
-          <SectionHeading
-            as="h3"
-            eyebrow="Ready-to-adapt platforms"
-            title="Platforms we can shape to your business"
-          />
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {solutions.slice(0, 6).map((solution) => (
-            <Link
-              key={solution.id}
-              href={`/services/${solution.serviceSlug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-[0_30px_60px_-40px_rgba(5,13,33,0.6)]"
-            >
-              <span className="relative block aspect-[16/10] overflow-hidden bg-slate-100">
-                <Image
-                  src={solution.image}
-                  alt={solution.imageAlt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <span className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/10 to-transparent" />
-                <span className="absolute bottom-4 left-4 flex items-center gap-2.5">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-500 text-white">
-                    <MegaServiceIcon monochrome slug={solution.serviceSlug} className="h-4.5 w-4.5" />
-                  </span>
-                  <span className="text-sm font-semibold text-white">{solution.name}</span>
-                </span>
-              </span>
-
-              <span className="flex flex-1 flex-col p-6">
-                <span className="text-base font-semibold text-ink-900">{solution.headline}</span>
-                <span className="mt-2.5 text-sm leading-relaxed text-ink-500">{solution.description}</span>
-                <span className="mt-4 space-y-2">
-                  {solution.bullets.map((bullet) => (
-                    <span key={bullet} className="flex items-start gap-2.5 text-sm text-ink-700">
-                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
-                      <span>{bullet}</span>
-                    </span>
-                  ))}
-                </span>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-600">
-                  View {solution.name}
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </span>
-            </Link>
-          ))}
-        </div>
-        </div>
-      </Section>
-
-      {/* Standard bottom padding: the mid-page CTA (dark) follows #portfolio. */}
-      <Section id="portfolio">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <SectionHeading
-            eyebrow="Project Profiles"
-            title="POS, apps, Shopify and portal project profiles"
-            description="Scope write-ups of software, mobile and e-commerce work — separate from the live demo sites above. Each profile links a full project page for indexing and detail."
-          />
-          <ButtonLink href="/portfolio" variant="secondary" className="shrink-0">
-            View Full Portfolio
-          </ButtonLink>
-        </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {featuredProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
       </Section>
 
       {/* Mid-page CTA — the page is long enough that a visitor convinced by
@@ -729,58 +590,23 @@ export default function HomePage() {
           "WordbitX is trusted to deliver work you can inspect". It is a globe
           with six market chips, so it belongs here as the Markets artwork. */}
       <Section id="markets" tone="dark">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              tone="dark"
-              eyebrow="Global Markets"
-              title="Software teams for Pakistan, USA, UK, UAE, Canada and Australia"
-              description="Pakistan is the operating base, and we build for clients across the United States, United Kingdom, United Arab Emirates, Canada and Australia. Each market page explains timezone overlap, collaboration and the software work that usually comes from that region."
-            />
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-400">
-              We do not publish numbers we cannot show. Every market on this sphere has its own page on this site, and
-              our live product and labelled demos are open for you to inspect before you ever talk to us.
-            </p>
-            <ButtonLink href="/global" variant="ghost" className="mt-8">
-              All markets
-            </ButtonLink>
-          </div>
-          <MarketSphere />
-        </div>
-
-        <div className="mt-16 grid gap-4 border-t border-white/10 pt-16 sm:mt-20 sm:grid-cols-2 sm:pt-20 lg:grid-cols-3">
-          {markets.map((market) => (
-            <Link
-              key={market.slug}
-              href={`/global/${market.slug}`}
-              className="group hover-sheen hover-sheen-dark animate-reveal relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 hover:border-brand-400/40 hover:shadow-[0_28px_70px_-36px_rgba(28,168,48,0.45)]"
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-brand-400 to-sky-400 transition-transform duration-1000 group-hover:scale-x-100"
-              />
-              <div className="relative flex items-center justify-between">
-                <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-brand-300">
-                  <FlagIcon slug={market.slug} className="h-3.5 w-5 shrink-0" />
-                  {market.country}
-                </p>
-                <span className="text-brand-300 opacity-0 transition-all duration-1000 group-hover:translate-x-0.5 group-hover:opacity-100">
-                  <ArrowRight className="h-4 w-4" />
-                </span>
-              </div>
-              <h3 className="relative mt-2 text-base font-semibold text-white transition-colors group-hover:text-brand-200">
-                {market.name}
-              </h3>
-              <p className="relative mt-2 text-sm leading-relaxed text-slate-400">{market.tagline}</p>
-            </Link>
-          ))}
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <SectionHeading
+            tone="dark"
+            eyebrow="Global Markets"
+            title="Software teams for Pakistan, USA, UK, UAE, Canada and Australia"
+            description="Pakistan is the operating base, and we build for clients across the United States, United Kingdom, United Arab Emirates, Canada and Australia. Each market page covers timezone overlap, collaboration and the software work that usually comes from that region."
+          />
+          <ButtonLink href="/global" variant="ghost" className="shrink-0">
+            All markets
+          </ButtonLink>
         </div>
 
         {/* Pakistan is the base market and the one with real city-level
             search demand. Each city page is written from that city's own
             industrial base — see src/lib/cities.ts for why we did not
             generate them from a template. */}
-        <div className="mt-14 border-t border-white/10 pt-14">
+        <div className="mt-12 border-t border-white/10 pt-12">
           <h3 className="text-2xl font-semibold text-white sm:text-3xl">And eleven cities inside Pakistan</h3>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">
             A Sialkot exporter and a Quetta trader need completely different software. Each city page covers that
@@ -814,7 +640,7 @@ export default function HomePage() {
           </ButtonLink>
         </div>
         <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {processSteps.map((step, index) => (
+          {processSteps.slice(0, 4).map((step, index) => (
             <li
               key={step.step}
               className={`group hover-sheen animate-reveal relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-300 hover:shadow-[0_28px_60px_-38px_rgba(5,13,33,0.5)] ${
@@ -838,67 +664,6 @@ export default function HomePage() {
             </li>
           ))}
         </ol>
-      </Section>
-
-      <Section id="technologies">
-        <SectionHeading
-          eyebrow="Technologies & Programming Languages"
-          title="A stack chosen for the problem, not for fashion"
-          description="We work across frontend, mobile, backend, data, cloud and commerce platforms — and recommend the combination that fits your budget, team and roadmap."
-          align="center"
-        />
-        <div className="mt-12 space-y-10">
-          {techCategories.map((category, index) => (
-            <div key={category.id} className="grid gap-6 lg:grid-cols-[0.8fr_2fr]">
-              <div>
-                <h3 className="text-lg font-semibold text-ink-900">{category.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-500">{category.description}</p>
-              </div>
-              {/* One scrolling row per category instead of a 2-3 row grid.
-                  Costs far less vertical space and lets every item show
-                  rather than the first six. Each row runs at its own speed so
-                  the rows do not pulse in lockstep, pauses on hover, and is
-                  stopped entirely by prefers-reduced-motion. The chips are
-                  plain text, not links, so nothing here is a moving target. */}
-              <div className="marquee-row marquee-mask overflow-hidden">
-                <div
-                  className="animate-marquee flex w-max items-center gap-3"
-                  style={{ animationDuration: `${category.items.length * 4.5 + index * 1.5}s` }}
-                >
-                  {[...category.items, ...category.items].map((item, i) => (
-                    <div key={`${category.id}-${item.name}-${i}`} className="shrink-0 [&_span]:whitespace-nowrap">
-                      <TechChip item={item} sprite />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-10 flex justify-center">
-          <ButtonLink href="/technologies" variant="secondary">
-            See the full technology list
-          </ButtonLink>
-        </div>
-      </Section>
-
-      {/* INSIGHTS */}
-      <Section id="insights">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <SectionHeading
-            eyebrow="Latest Insights"
-            title="Guides on software, websites, apps and project cost"
-            description="Practical articles on cost, platform choice and technology decisions — written by the team that delivers the work, and updated on the blog."
-          />
-          <ButtonLink href="/blog" variant="secondary" className="shrink-0">
-            Visit the Blog
-          </ButtonLink>
-        </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {latestPosts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
       </Section>
 
       {/* FAQ */}
