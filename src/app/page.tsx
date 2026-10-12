@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import * as SimpleIcons from "simple-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { Section, SectionHeading, ButtonLink, Eyebrow } from "@/components/ui";
@@ -142,6 +143,36 @@ const homeServiceSlugs = [
   "ai-solutions",
 ];
 
+
+type TechGlyphProps = {
+  item: { name: string; icon?: string; fallback?: string; color?: string };
+  onDark?: boolean;
+  sprite?: boolean;
+  className?: string;
+};
+
+/** Renders a technology brand mark from simple-icons, with a text fallback. */
+function TechGlyph({ item, onDark = false, className }: TechGlyphProps) {
+  const brand = item.icon
+    ? (SimpleIcons as unknown as Record<string, { path: string; hex: string }>)[item.icon]
+    : undefined;
+
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center justify-center ${className ?? ""}`}
+      aria-hidden="true"
+      style={{ color: item.color ?? (onDark ? "#cbd5e1" : "#334155") }}
+    >
+      {brand ? (
+        <svg viewBox="0 0 24 24" className="h-full w-full" fill="currentColor" focusable="false">
+          <path d={brand.path} />
+        </svg>
+      ) : (
+        <span className="text-[0.6rem] font-bold leading-none">{item.fallback ?? item.name.slice(0, 2).toUpperCase()}</span>
+      )}
+    </span>
+  );
+}
 
 export default function HomePage() {
   const homeServices = getServices(homeServiceSlugs);
